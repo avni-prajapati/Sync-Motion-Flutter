@@ -1,6 +1,5 @@
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math' as math;
 
@@ -15,7 +14,6 @@ class HomeController extends GetxController {
   var shouldPlay = true.obs;
   var isOverlayOn = false.obs;
   var isOverlayPermissionGranted = Rxn<bool>();
-  final storageBox = GetStorage('MyStorage');
 
   @override
   void onInit() {
