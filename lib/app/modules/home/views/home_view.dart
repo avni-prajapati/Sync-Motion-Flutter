@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 
 import 'package:get/get.dart';
-
-import '../controllers/home_controller.dart';
-import '../widgets/dotted_ui.dart';
+import 'package:kine_stop/app/modules/home/controllers/home_controller.dart';
+import 'package:kine_stop/app/modules/home/widgets/dotted_ui.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -24,12 +22,14 @@ class HomeView extends GetView<HomeController> {
                   : Stack(
                     alignment: Alignment.center,
                     children: [
-                      Positioned.fill(
-                        child: Transform.rotate(
-                          angle: controller.shouldPlay.value ? controller.angle.value : 0,
-                          child: DottedUI(),
-                        ),
-                      ),
+                      !controller.isOverlayOn.value
+                          ? Positioned.fill(
+                            child: Transform.rotate(
+                              angle: controller.shouldPlay.value ? controller.angle.value : 0,
+                              child: DottedUI(),
+                            ),
+                          )
+                          : SizedBox.shrink(),
                       Align(
                         alignment: Alignment.topCenter,
                         child: SizedBox(
@@ -41,17 +41,20 @@ class HomeView extends GetView<HomeController> {
                     ],
                   ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            controller.alterPlayPauseValue();
-          },
-          backgroundColor: Colors.black38,
-          elevation: 0,
-          child: Icon(
-            controller.shouldPlay.value ? Icons.pause : Icons.play_arrow,
-            color: Colors.white,
-          ),
-        ),
+        floatingActionButton:
+            controller.isOverlayOn.value
+                ? SizedBox.shrink()
+                : FloatingActionButton(
+                  onPressed: () {
+                    controller.alterPlayPauseValue();
+                  },
+                  backgroundColor: Colors.black38,
+                  elevation: 0,
+                  child: Icon(
+                    controller.shouldPlay.value ? Icons.pause : Icons.play_arrow,
+                    color: Colors.white,
+                  ),
+                ),
       ),
     );
   }
@@ -69,7 +72,7 @@ class MenuButton extends StatelessWidget {
         return [
           PopupMenuItem(
             value: '1',
-            child: Text(homeController.shouldPlay.value ? 'Start overlay' : 'Stop overlay'),
+            child: Text(!homeController.isOverlayOn.value ? 'Start overlay' : 'Stop overlay'),
           ),
         ];
       },

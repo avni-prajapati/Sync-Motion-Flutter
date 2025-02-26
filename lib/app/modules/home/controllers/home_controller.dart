@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,6 +13,7 @@ class HomeController extends GetxController {
   var xValue = 0.0.obs;
   var yValue = 0.0.obs;
   var shouldPlay = true.obs;
+  var isOverlayOn = false.obs;
   var isOverlayPermissionGranted = Rxn<bool>();
   final storageBox = GetStorage('MyStorage');
 
@@ -60,16 +60,17 @@ class HomeController extends GetxController {
 
   Future<void> handleOverlay() async {
     if (await FlutterOverlayWindow.isPermissionGranted()) {
-      if (shouldPlay.value) {
+      if (!isOverlayOn.value) {
+        isOverlayOn.value = true;
         await FlutterOverlayWindow.showOverlay(
           enableDrag: false,
           flag: OverlayFlag.clickThrough,
           alignment: OverlayAlignment.bottomCenter,
-          // height: MediaQuery.of(Get.context!).size.height, // Full height
-          // width: MediaQuery.of(Get.context!).size.width, // Full width
         );
       } else {
+        isOverlayOn.value = false;
         await FlutterOverlayWindow.closeOverlay();
+        isOverlayOn.refresh();
       }
     } else {
       await FlutterOverlayWindow.requestPermission();
