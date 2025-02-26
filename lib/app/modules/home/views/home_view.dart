@@ -23,10 +23,7 @@ class HomeView extends GetView<HomeController> {
                     alignment: Alignment.center,
                     children: [
                       Positioned.fill(
-                        child: Transform.rotate(
-                          angle: controller.steeringAngle.value,
-                          child: DottedUI(),
-                        ),
+                        child: Transform.rotate(angle: controller.angle.value, child: DottedUI()),
                       ),
                       Align(
                         alignment: Alignment.topCenter,
