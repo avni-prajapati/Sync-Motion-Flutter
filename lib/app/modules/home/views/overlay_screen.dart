@@ -1,41 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../controllers/home_controller.dart';
 import '../widgets/dotted_ui.dart';
 
-class OverLayScreen extends GetView<HomeController> {
-  const OverLayScreen({super.key});
+class OverLayView extends StatelessWidget {
+  const OverLayView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        extendBody: true,
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child:
-              controller.hasError.value == true
-                  ? Text('MEOOOWWWW', style: TextStyle(fontSize: 20))
-                  : Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned.fill(
-                        child: Transform.rotate(angle: controller.angle.value, child: DottedUI()),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: SizedBox(
-                          height: 150,
-                          width: 150,
-                          child: Image.asset('assets/car.png'),
-                        ),
-                      ),
-                    ],
-                  ),
-        ),
-      ),
-    );
+    final controller = Get.put(HomeController(), permanent: true);
+    final size = MediaQuery.sizeOf(context);
+    return Obx(() {
+      return Transform.rotate(angle: controller.angle.value, child: DottedUI());
+    });
   }
 }

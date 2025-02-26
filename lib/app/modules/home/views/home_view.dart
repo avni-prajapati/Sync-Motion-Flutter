@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class HomeView extends GetView<HomeController> {
         appBar: AppBar(
           title: const Text('MEOW', style: TextStyle(fontSize: 25)),
           centerTitle: true,
+          actions: [MenuButton(homeController: controller)],
         ),
         body: Center(
           child:
@@ -51,6 +53,29 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MenuButton extends StatelessWidget {
+  const MenuButton({super.key, required this.homeController});
+
+  final HomeController homeController;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            value: '1',
+            child: Text(homeController.shouldPlay.value ? 'Start overlay' : 'Stop overlay'),
+          ),
+        ];
+      },
+      onSelected: (value) {
+        homeController.handleOverlay();
+      },
     );
   }
 }
