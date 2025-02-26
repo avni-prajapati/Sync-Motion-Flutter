@@ -10,6 +10,7 @@ class HomeController extends GetxController {
   var hasError = false.obs;
   var xValue = 0.0.obs;
   var yValue = 0.0.obs;
+  var shouldPlay = true.obs;
 
   @override
   void onInit() {
@@ -41,5 +42,9 @@ class HomeController extends GetxController {
     }
     final newValue = math.atan2(currentCoordinates.y, currentCoordinates.x) - (math.pi / 2);
     angle.value = newValue < -1 ? newValue + (math.pi) : newValue;
+  }
+
+  void alterPlayPauseValue() {
+    shouldPlay.value = !shouldPlay.value;
   }
 }

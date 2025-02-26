@@ -6,7 +6,6 @@ class DottedUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     return Stack(
       children: [
         Transform.scale(

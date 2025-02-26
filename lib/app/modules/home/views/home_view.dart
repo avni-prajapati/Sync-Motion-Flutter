@@ -23,7 +23,10 @@ class HomeView extends GetView<HomeController> {
                     alignment: Alignment.center,
                     children: [
                       Positioned.fill(
-                        child: Transform.rotate(angle: controller.angle.value, child: DottedUI()),
+                        child: Transform.rotate(
+                          angle: controller.shouldPlay.value ? controller.angle.value : 0,
+                          child: DottedUI(),
+                        ),
                       ),
                       Align(
                         alignment: Alignment.topCenter,
@@ -35,6 +38,17 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ],
                   ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            controller.alterPlayPauseValue();
+          },
+          backgroundColor: Colors.black38,
+          elevation: 0,
+          child: Icon(
+            controller.shouldPlay.value ? Icons.pause : Icons.play_arrow,
+            color: Colors.white,
+          ),
         ),
       ),
     );
