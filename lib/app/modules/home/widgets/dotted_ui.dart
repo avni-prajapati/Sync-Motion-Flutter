@@ -24,8 +24,8 @@ class DottedUI extends StatelessWidget {
           ),
         ),
         Transform.scale(
-          scaleX: 2,
-          scaleY: 2,
+          scaleX: 3,
+          scaleY: 3,
           child: Column(
             children: [
               Expanded(flex: 2, child: Container(color: Colors.transparent)),

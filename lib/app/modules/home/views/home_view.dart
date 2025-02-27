@@ -26,6 +26,7 @@ class HomeView extends GetView<HomeController> {
                           ? Positioned.fill(
                             child: Transform.rotate(
                               angle: controller.shouldPlay.value ? controller.angle.value : 0,
+                              filterQuality: FilterQuality.high,
                               child: DottedUI(),
                             ),
                           )

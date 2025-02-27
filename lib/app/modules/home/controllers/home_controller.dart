@@ -49,7 +49,8 @@ class HomeController extends GetxController {
       return;
     }
     final newValue = -math.atan2(currentCoordinates.y, currentCoordinates.x) - (math.pi / 2);
-    angle.value = newValue < -1 ? newValue + (math.pi) : newValue;
+    var a = -5 < newValue && newValue < -1 ? newValue + (math.pi) : newValue;
+    angle.value = a.clamp(-1.05, 1.05);
   }
 
   void alterPlayPauseValue() {
