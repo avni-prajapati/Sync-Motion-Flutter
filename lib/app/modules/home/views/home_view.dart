@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kine_stop/app/modules/home/controllers/home_controller.dart';
 import 'package:kine_stop/app/modules/home/widgets/dotted_ui.dart';
+import 'package:kine_stop/app/modules/home/widgets/error_widget.dart';
+import 'package:kine_stop/app/modules/home/widgets/menu_button.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -10,36 +12,12 @@ class HomeView extends GetView<HomeController> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: const Text('MEOW', style: TextStyle(fontSize: 25)),
+          title: const Text('Tilt Track', style: TextStyle(fontSize: 25)),
           centerTitle: true,
-          actions: [MenuButton(homeController: controller)],
+          actions: [MenuButton()],
         ),
         body: Center(
-          child:
-              controller.hasError.value == true
-                  ? Text('MEOOOWWWW', style: TextStyle(fontSize: 20))
-                  : Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      !controller.isOverlayOn.value
-                          ? Positioned.fill(
-                            child: Transform.rotate(
-                              angle: controller.shouldPlay.value ? controller.angle.value : 0,
-                              filterQuality: FilterQuality.high,
-                              child: DottedUI(),
-                            ),
-                          )
-                          : SizedBox.shrink(),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: SizedBox(
-                          height: 150,
-                          width: 150,
-                          child: Image.asset('assets/car.png'),
-                        ),
-                      ),
-                    ],
-                  ),
+          child: controller.hasError.value == true ? CustomErrorWidget() : DottedMovingUI(),
         ),
         floatingActionButton:
             controller.isOverlayOn.value
@@ -60,25 +38,30 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-class MenuButton extends StatelessWidget {
-  const MenuButton({super.key, required this.homeController});
+class DottedMovingUI extends StatelessWidget {
+  DottedMovingUI({super.key});
 
-  final HomeController homeController;
+  final controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
-      itemBuilder: (context) {
-        return [
-          PopupMenuItem(
-            value: '1',
-            child: Text(!homeController.isOverlayOn.value ? 'Start overlay' : 'Stop overlay'),
-          ),
-        ];
-      },
-      onSelected: (value) {
-        homeController.handleOverlay();
-      },
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        !controller.isOverlayOn.value
+            ? Positioned.fill(
+              child: Transform.rotate(
+                angle: controller.shouldPlay.value ? controller.angle.value : 0,
+                filterQuality: FilterQuality.high,
+                child: DottedUI(),
+              ),
+            )
+            : SizedBox.shrink(),
+        Align(
+          alignment: Alignment.topCenter,
+          child: SizedBox(height: 150, width: 150, child: Image.asset('assets/car.png')),
+        ),
+      ],
     );
   }
 }
