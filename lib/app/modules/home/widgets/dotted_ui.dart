@@ -2,24 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:kine_stop/app/modules/home/widgets/rounded_container.dart';
 
 class DottedUI extends StatelessWidget {
-  const DottedUI({super.key});
+  DottedUI({super.key});
 
+  final List<double> sizes = [10, 15, 18, 22, 24, 27, 24, 22, 18, 15, 10];
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Transform.scale(
-          scaleX: 2,
-          scaleY: 2,
-          child: Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 20, // Horizontal space
-                runSpacing: 32,
-                children: List.generate(65, (index) => RoundContainer()),
-              ),
+        Align(
+          alignment: Alignment.center,
+          child: SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(sizes.length, (index) => RoundContainer(size: sizes[index])),
             ),
           ),
         ),

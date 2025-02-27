@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:kine_stop/app/modules/home/controllers/home_controller.dart';
 import 'package:kine_stop/app/modules/home/widgets/dotted_ui.dart';
