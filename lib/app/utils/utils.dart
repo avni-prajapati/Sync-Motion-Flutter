@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum AppState { loading, loaded, error, initial }
 
-enum ThemeColor { purple, pink, orange, blue, green }
+enum ThemeShape { round, square, heart }
 
 List<Color> themeColorsList = [
   Colors.deepPurple.withAlpha(60),

@@ -12,62 +12,134 @@ class ThemeBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-      ),
-      child: Column(
-        spacing: 16,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: onBackTap,
-                child: Container(height: 4, width: 60, color: Colors.grey),
+    return Obx(
+      () => Container(
+        width: double.infinity,
+        padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 40),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
+        ),
+        child: Column(
+          spacing: 16,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: onBackTap,
+                  child: Container(height: 4, width: 60, color: Colors.grey),
+                ),
+              ],
+            ),
+            Text(
+              'Shape',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
-          Text('Shape', style: TextStyle(fontSize: 20, color: Colors.black87)),
-          Row(
-            spacing: 16,
-            children: [
-              RoundContainer(
-                size: 35,
-                boarderRadius: 30,
-                color: Colors.deepPurple.withAlpha(70),
+            ),
+            Row(
+              spacing: 16,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _ShapeWidget(
+                  shapeWidget: RoundContainer(
+                    size: 35,
+                    boarderRadius: 30,
+                    color: themeController.selectedColor.value,
+                    onTap: () {
+                      themeController.setSelectedShape(shape: ThemeShape.round);
+                    },
+                  ),
+                  isSelected:
+                      themeController.selectedShape.value == ThemeShape.round,
+                ),
+                _ShapeWidget(
+                  shapeWidget: RoundContainer(
+                    size: 30,
+                    boarderRadius: 0,
+                    color: themeController.selectedColor.value,
+                    onTap: () {
+                      themeController.setSelectedShape(
+                        shape: ThemeShape.square,
+                      );
+                    },
+                  ),
+                  isSelected:
+                      themeController.selectedShape.value == ThemeShape.square,
+                ),
+                _ShapeWidget(
+                  shapeWidget: HeartWidget(
+                    color: themeController.selectedColor.value,
+                    size: 40,
+                    onTap: () {
+                      themeController.setSelectedShape(shape: ThemeShape.heart);
+                    },
+                  ),
+                  isSelected:
+                      themeController.selectedShape.value == ThemeShape.heart,
+                ),
+              ],
+            ),
+            Text(
+              'Color',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
               ),
-              RoundContainer(
-                size: 30,
-                boarderRadius: 0,
-                color: Colors.deepPurple.withAlpha(70),
-              ),
-              HeartWidget(color: Colors.deepPurple.withAlpha(70), size: 40),
-            ],
-          ),
-          Text('Color', style: TextStyle(fontSize: 20, color: Colors.black87)),
-          Row(
-            spacing: 16,
-            children: List.generate(5, (index) {
-              return GestureDetector(
-                onTap: () {
-                  themeController.setSelectedColor();
-                },
-                child: RoundContainer(
+            ),
+            Row(
+              spacing: 16,
+              children: List.generate(5, (index) {
+                return RoundContainer(
                   size: 40,
                   boarderRadius: 30,
                   color: themeColorsList[index],
-                ),
-              );
-            }),
-          ),
-        ],
+                  isSelected:
+                      themeController.selectedColor.value ==
+                      themeColorsList[index],
+                  onTap: () {
+                    themeController.setSelectedColor(
+                      color: themeColorsList[index],
+                    );
+                  },
+                );
+              }),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class _ShapeWidget extends StatelessWidget {
+  const _ShapeWidget({
+    super.key,
+    required this.shapeWidget,
+    required this.isSelected,
+  });
+
+  final Widget shapeWidget;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 8,
+      children: [
+        shapeWidget,
+        Container(
+          height: 4,
+          width: 30,
+          color: isSelected ? Colors.black87 : Colors.transparent,
+        ),
+      ],
     );
   }
 }
