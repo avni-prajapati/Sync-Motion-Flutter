@@ -14,7 +14,14 @@ class DottedUI extends StatelessWidget {
           child: SizedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(sizes.length, (index) => RoundContainer(size: sizes[index])),
+              children: List.generate(
+                sizes.length,
+                (index) => RoundContainer(
+                  size: sizes[index],
+                  boarderRadius: 30,
+                  color: Colors.deepPurple.withAlpha(70),
+                ),
+              ),
             ),
           ),
         ),
@@ -24,7 +31,10 @@ class DottedUI extends StatelessWidget {
           child: Column(
             children: [
               Expanded(flex: 2, child: Container(color: Colors.transparent)),
-              Expanded(flex: 2, child: Container(color: Colors.deepPurple.withAlpha(40))),
+              Expanded(
+                flex: 2,
+                child: Container(color: Colors.deepPurple.withAlpha(40)),
+              ),
             ],
           ),
         ),

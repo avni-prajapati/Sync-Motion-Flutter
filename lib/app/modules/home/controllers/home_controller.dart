@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math' as math;
 
-enum AppState { loading, loaded, error, initial }
-
 class HomeController extends GetxController {
   late final Stream<AccelerometerEvent> accelerometerStream;
   var angle = 0.0.obs;
@@ -24,7 +22,8 @@ class HomeController extends GetxController {
   }
 
   fetchPermissionValue() async {
-    isOverlayPermissionGranted.value = await FlutterOverlayWindow.isPermissionGranted();
+    isOverlayPermissionGranted.value =
+        await FlutterOverlayWindow.isPermissionGranted();
   }
 
   void listenAccelerometerStream() {
@@ -48,7 +47,8 @@ class HomeController extends GetxController {
       angle.value = 0;
       return;
     }
-    final newValue = -math.atan2(currentCoordinates.y, currentCoordinates.x) - (math.pi / 2);
+    final newValue =
+        -math.atan2(currentCoordinates.y, currentCoordinates.x) - (math.pi / 2);
     var a = -5 < newValue && newValue < -1 ? newValue + (math.pi) : newValue;
     angle.value = a.clamp(-1.05, 1.05);
   }
