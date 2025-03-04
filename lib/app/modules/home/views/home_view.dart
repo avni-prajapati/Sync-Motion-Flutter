@@ -7,15 +7,15 @@ import 'package:kine_stop/app/modules/home/widgets/error_widget.dart';
 import 'package:kine_stop/app/modules/home/widgets/menu_button.dart';
 import 'package:kine_stop/app/modules/home/widgets/bottom_sheet.dart';
 import 'package:kine_stop/app/modules/home/widgets/theme_button.dart';
+import 'package:kine_stop/app/utils/utils.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key});
-
-  final homeController = Get.find<HomeController>();
-  final themeController = Get.find<ThemeController>();
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.find<HomeController>();
+    final themeController = Get.find<ThemeController>();
     return Obx(
       () => Scaffold(
         appBar: AppBar(
@@ -34,11 +34,12 @@ class HomeView extends StatelessWidget {
                           ? Positioned.fill(
                             child: Transform.rotate(
                               angle:
-                                  homeController.shouldPlay.value
-                                      ? homeController.angle.value
-                                      : 0,
+                                  homeController.shouldPlay.value ? homeController.angle.value : 0,
                               filterQuality: FilterQuality.high,
-                              child: DottedUI(),
+                              child: DottedUI(
+                                color: themeController.selectedColor.value ?? themeColorsList[0],
+                                themeShape: themeController.selectedShape.value ?? ThemeShape.round,
+                              ),
                             ),
                           )
                           : SizedBox.shrink(),
@@ -46,22 +47,20 @@ class HomeView extends StatelessWidget {
                         alignment: Alignment.topCenter,
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 150,
-                              width: 150,
-                              child: Image.asset('assets/car.png'),
-                            ),
-                            ThemeButton(
-                              onThemeTap: () {
-                                Get.bottomSheet(
-                                  ThemeBottomSheet(
-                                    onBackTap: () {
-                                      // Navigator.maybePop(context);
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
+                            SizedBox(height: 150, width: 150, child: Image.asset('assets/car.png')),
+                            homeController.isOverlayOn.value
+                                ? SizedBox.shrink()
+                                : ThemeButton(
+                                  onThemeTap: () {
+                                    Get.bottomSheet(
+                                      ThemeBottomSheet(
+                                        onBackTap: () {
+                                          // Navigator.maybePop(context);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
                           ],
                         ),
                       ),
@@ -78,9 +77,7 @@ class HomeView extends StatelessWidget {
                   backgroundColor: Colors.black38,
                   elevation: 0,
                   child: Icon(
-                    homeController.shouldPlay.value
-                        ? Icons.pause
-                        : Icons.play_arrow,
+                    homeController.shouldPlay.value ? Icons.pause : Icons.play_arrow,
                     color: Colors.white,
                   ),
                 ),

@@ -5,21 +5,18 @@ import 'package:kine_stop/app/modules/home/widgets/rounded_container.dart';
 import 'package:kine_stop/app/utils/utils.dart';
 
 class ThemeBottomSheet extends StatelessWidget {
-  ThemeBottomSheet({super.key, required this.onBackTap});
+  const ThemeBottomSheet({super.key, required this.onBackTap});
 
   final VoidCallback onBackTap;
-  final themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Obx(
       () => Container(
         width: double.infinity,
         padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 40),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white,
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white),
         child: Column(
           spacing: 16,
           mainAxisSize: MainAxisSize.min,
@@ -36,11 +33,7 @@ class ThemeBottomSheet extends StatelessWidget {
             ),
             Text(
               'Shape',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.bold),
             ),
             Row(
               spacing: 16,
@@ -50,48 +43,45 @@ class ThemeBottomSheet extends StatelessWidget {
                   shapeWidget: RoundContainer(
                     size: 35,
                     boarderRadius: 30,
-                    color: themeController.selectedColor.value,
-                    onTap: () {
-                      themeController.setSelectedShape(shape: ThemeShape.round);
+                    color:
+                        themeController.selectedColor.value?.withAlpha(70) ??
+                        themeColorsList[0].withAlpha(70),
+                    onTap: () async {
+                      await themeController.setSelectedShape(shape: ThemeShape.round);
                     },
                   ),
-                  isSelected:
-                      themeController.selectedShape.value == ThemeShape.round,
+                  isSelected: themeController.selectedShape.value == ThemeShape.round,
                 ),
                 _ShapeWidget(
                   shapeWidget: RoundContainer(
                     size: 30,
                     boarderRadius: 0,
-                    color: themeController.selectedColor.value,
-                    onTap: () {
-                      themeController.setSelectedShape(
-                        shape: ThemeShape.square,
-                      );
+                    color:
+                        themeController.selectedColor.value?.withAlpha(70) ??
+                        themeColorsList[0].withAlpha(70),
+                    onTap: () async {
+                      await themeController.setSelectedShape(shape: ThemeShape.square);
                     },
                   ),
-                  isSelected:
-                      themeController.selectedShape.value == ThemeShape.square,
+                  isSelected: themeController.selectedShape.value == ThemeShape.square,
                 ),
                 _ShapeWidget(
                   shapeWidget: HeartWidget(
-                    color: themeController.selectedColor.value,
+                    color:
+                        themeController.selectedColor.value?.withAlpha(70) ??
+                        themeColorsList[0].withAlpha(70),
                     size: 40,
-                    onTap: () {
-                      themeController.setSelectedShape(shape: ThemeShape.heart);
+                    onTap: () async {
+                      await themeController.setSelectedShape(shape: ThemeShape.heart);
                     },
                   ),
-                  isSelected:
-                      themeController.selectedShape.value == ThemeShape.heart,
+                  isSelected: themeController.selectedShape.value == ThemeShape.heart,
                 ),
               ],
             ),
             Text(
               'Color',
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.bold),
             ),
             Row(
               spacing: 16,
@@ -99,14 +89,10 @@ class ThemeBottomSheet extends StatelessWidget {
                 return RoundContainer(
                   size: 40,
                   boarderRadius: 30,
-                  color: themeColorsList[index],
-                  isSelected:
-                      themeController.selectedColor.value ==
-                      themeColorsList[index],
-                  onTap: () {
-                    themeController.setSelectedColor(
-                      color: themeColorsList[index],
-                    );
+                  color: themeColorsList[index].withAlpha(70),
+                  isSelected: themeController.selectedColor.value == themeColorsList[index],
+                  onTap: () async {
+                    await themeController.setSelectedColor(color: themeColorsList[index]);
                   },
                 );
               }),
@@ -119,11 +105,7 @@ class ThemeBottomSheet extends StatelessWidget {
 }
 
 class _ShapeWidget extends StatelessWidget {
-  const _ShapeWidget({
-    super.key,
-    required this.shapeWidget,
-    required this.isSelected,
-  });
+  const _ShapeWidget({super.key, required this.shapeWidget, required this.isSelected});
 
   final Widget shapeWidget;
   final bool isSelected;
@@ -134,11 +116,7 @@ class _ShapeWidget extends StatelessWidget {
       spacing: 8,
       children: [
         shapeWidget,
-        Container(
-          height: 4,
-          width: 30,
-          color: isSelected ? Colors.black87 : Colors.transparent,
-        ),
+        Container(height: 4, width: 30, color: isSelected ? Colors.black87 : Colors.transparent),
       ],
     );
   }

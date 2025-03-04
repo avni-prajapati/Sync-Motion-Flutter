@@ -13,6 +13,10 @@ class AppPages {
 
   static final routes = [
     GetPage(name: _Paths.HOME, page: () => HomeView(), binding: HomeBinding()),
-    GetPage(name: _Paths.OVERLAY, page: () => OverLayView()),
+    GetPage(
+      name: _Paths.OVERLAY,
+      page: () => OverLayView(),
+      binding: HomeBinding(),
+    ),
   ];
 }
