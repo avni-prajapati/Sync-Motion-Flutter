@@ -49,4 +49,28 @@ class ThemeClass {
         return null;
     }
   }
+
+  static String getShapeName(ThemeShape themeShape) {
+    switch (themeShape) {
+      case ThemeShape.round:
+        return 'round';
+      case ThemeShape.square:
+        return 'square';
+      case ThemeShape.heart:
+        return 'heart';
+    }
+  }
+
+  static ThemeShape? getShapeFromName(String name) {
+    switch (name.toLowerCase()) {
+      case 'round':
+        return ThemeShape.round;
+      case 'square':
+        return ThemeShape.square;
+      case 'heart':
+        return ThemeShape.heart;
+      default:
+        return null;
+    }
+  }
 }

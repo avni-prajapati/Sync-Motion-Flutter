@@ -19,15 +19,15 @@ class ThemeController extends GetxController {
     final themeData = box.read('theme');
     if (themeData != null) {
       selectedColor.value = ThemeClass.getColorFromName(themeData['color']) ?? themeColorsList[0];
-      selectedShape.value = themeData?['shape'] ?? ThemeShape.round;
+      selectedShape.value = ThemeClass.getShapeFromName(themeData?['shape']) ?? ThemeShape.round;
     }
   }
 
   Future<void> setSelectedColor({required Color color}) async {
     selectedColor.value = color;
     await box.write('theme', {
-      'color': ThemeClass.getColorName(color),
-      'shape': selectedShape.value,
+      'color': ThemeClass.getColorName(selectedColor.value ?? themeColorsList[0]),
+      'shape': ThemeClass.getShapeName(selectedShape.value ?? ThemeShape.round),
     });
   }
 
@@ -35,7 +35,7 @@ class ThemeController extends GetxController {
     selectedShape.value = shape;
     await box.write('theme', {
       'color': ThemeClass.getColorName(selectedColor.value ?? themeColorsList[0]),
-      'shape': selectedShape.value,
+      'shape': ThemeClass.getShapeName(selectedShape.value ?? ThemeShape.round),
     });
   }
 }

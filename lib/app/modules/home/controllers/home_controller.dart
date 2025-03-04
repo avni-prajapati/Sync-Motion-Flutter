@@ -1,5 +1,6 @@
 import 'package:flutter_overlay_window/flutter_overlay_window.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'dart:math' as math;
 
@@ -12,6 +13,7 @@ class HomeController extends GetxController {
   var shouldPlay = true.obs;
   var isOverlayOn = false.obs;
   var isOverlayPermissionGranted = Rxn<bool>();
+  final box = GetStorage('ThemeData');
 
   @override
   void onInit() {
@@ -19,11 +21,18 @@ class HomeController extends GetxController {
     accelerometerStream = accelerometerEventStream();
     fetchPermissionValue();
     listenAccelerometerStream();
+    getAndSetStoredTheme();
+  }
+
+  Future<void> getAndSetStoredTheme() async {
+    final overlayData = box.read('isOverlayOn');
+    if (overlayData != null) {
+      isOverlayOn.value = overlayData;
+    }
   }
 
   fetchPermissionValue() async {
-    isOverlayPermissionGranted.value =
-        await FlutterOverlayWindow.isPermissionGranted();
+    isOverlayPermissionGranted.value = await FlutterOverlayWindow.isPermissionGranted();
   }
 
   void listenAccelerometerStream() {
@@ -47,8 +56,7 @@ class HomeController extends GetxController {
       angle.value = 0;
       return;
     }
-    final newValue =
-        -math.atan2(currentCoordinates.y, currentCoordinates.x) - (math.pi / 2);
+    final newValue = -math.atan2(currentCoordinates.y, currentCoordinates.x) - (math.pi / 2);
     var a = -5 < newValue && newValue < -1 ? newValue + (math.pi) : newValue;
     angle.value = a.clamp(-1.05, 1.05);
   }
@@ -61,6 +69,7 @@ class HomeController extends GetxController {
     if (await FlutterOverlayWindow.isPermissionGranted()) {
       if (!isOverlayOn.value) {
         isOverlayOn.value = true;
+        await box.write('isOverlayOn', true);
         await FlutterOverlayWindow.showOverlay(
           enableDrag: false,
           flag: OverlayFlag.clickThrough,
@@ -68,6 +77,7 @@ class HomeController extends GetxController {
         );
       } else {
         isOverlayOn.value = false;
+        await box.write('isOverlayOn', false);
         await FlutterOverlayWindow.closeOverlay();
         isOverlayOn.refresh();
       }
