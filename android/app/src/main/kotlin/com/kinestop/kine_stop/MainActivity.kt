@@ -1,4 +1,4 @@
-package com.kinestop.kine_stop
+package com.avni.sync_motion
 
 import io.flutter.embedding.android.FlutterActivity
 

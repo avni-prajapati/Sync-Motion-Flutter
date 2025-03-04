@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: const Text('Tilt Track', style: TextStyle(fontSize: 25)),
+          title: const Text('SyncMotion', style: TextStyle(fontSize: 25)),
           centerTitle: true,
           actions: [MenuButton()],
         ),
