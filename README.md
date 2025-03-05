@@ -4,7 +4,7 @@
 
 ### Stay steady with a display that moves with you—perfect for car rides! 🚘
 
-![Built With](https://img.shields.io/badge/Built%20With-Flutter-blue) ![Platform](https://img.shields.io/badge/Platform-Android-ff69b4)
+[![Flutter](https://img.shields.io/badge/Flutter-Framework-02569B?logo=flutter)](https://flutter.dev/) [![Dart](https://img.shields.io/badge/Dart-Language-0175C2?logo=dart)](https://dart.dev/) [![Android](https://img.shields.io/badge/Android-Platform-3DDC84?logo=android)](https://developer.android.com/)
 
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen) ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
 
