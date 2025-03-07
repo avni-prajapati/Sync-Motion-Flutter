@@ -48,7 +48,8 @@ class HomeView extends StatelessWidget {
                         child: Column(
                           children: [
                             SizedBox(height: 150, width: 150, child: Image.asset('assets/car.png')),
-                            homeController.shouldShowOverlay.value
+                            homeController.shouldShowOverlay.value &&
+                                    homeController.isOverlayPermissionGranted.value == true
                                 ? SizedBox.shrink()
                                 : ThemeButton(
                                   onThemeTap: () {
