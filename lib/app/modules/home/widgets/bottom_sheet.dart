@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kine_stop/app/modules/home/controllers/theme_controller.dart';
-import 'package:kine_stop/app/modules/home/widgets/rounded_container.dart';
-import 'package:kine_stop/app/utils/utils.dart';
+import 'package:sync_motion/app/modules/home/controllers/theme_controller.dart';
+import 'package:sync_motion/app/modules/home/widgets/rounded_container.dart';
+import 'package:sync_motion/app/utils/utils.dart';
 
 class ThemeBottomSheet extends StatelessWidget {
   const ThemeBottomSheet({super.key, required this.onBackTap});

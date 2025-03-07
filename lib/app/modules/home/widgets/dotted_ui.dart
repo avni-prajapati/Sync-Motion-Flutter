@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kine_stop/app/modules/home/widgets/rounded_container.dart';
-import 'package:kine_stop/app/utils/utils.dart';
+import 'package:sync_motion/app/modules/home/widgets/rounded_container.dart';
+import 'package:sync_motion/app/utils/utils.dart';
 
 class DottedUI extends StatelessWidget {
   const DottedUI({super.key, required this.color, required this.themeShape});

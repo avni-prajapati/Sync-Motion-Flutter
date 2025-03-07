@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:kine_stop/app/utils/utils.dart';
+import 'package:sync_motion/app/utils/utils.dart';
 
 class ThemeController extends GetxController {
   final selectedColor = Rxn<Color>();

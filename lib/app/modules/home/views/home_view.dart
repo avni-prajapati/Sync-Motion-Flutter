@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kine_stop/app/modules/home/controllers/home_controller.dart';
-import 'package:kine_stop/app/modules/home/controllers/theme_controller.dart';
-import 'package:kine_stop/app/modules/home/widgets/dotted_ui.dart';
-import 'package:kine_stop/app/modules/home/widgets/error_widget.dart';
-import 'package:kine_stop/app/modules/home/widgets/menu_button.dart';
-import 'package:kine_stop/app/modules/home/widgets/bottom_sheet.dart';
-import 'package:kine_stop/app/modules/home/widgets/theme_button.dart';
-import 'package:kine_stop/app/utils/utils.dart';
+import 'package:sync_motion/app/modules/home/controllers/home_controller.dart';
+import 'package:sync_motion/app/modules/home/controllers/theme_controller.dart';
+import 'package:sync_motion/app/modules/home/widgets/dotted_ui.dart';
+import 'package:sync_motion/app/modules/home/widgets/error_widget.dart';
+import 'package:sync_motion/app/modules/home/widgets/menu_button.dart';
+import 'package:sync_motion/app/modules/home/widgets/bottom_sheet.dart';
+import 'package:sync_motion/app/modules/home/widgets/theme_button.dart';
+import 'package:sync_motion/app/utils/utils.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
                   : Stack(
                     alignment: Alignment.center,
                     children: [
-                      !homeController.isOverlayOn.value
+                      !homeController.shouldShowOverlay.value
                           ? Positioned.fill(
                             child: Transform.rotate(
                               angle:
@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
                         child: Column(
                           children: [
                             SizedBox(height: 150, width: 150, child: Image.asset('assets/car.png')),
-                            homeController.isOverlayOn.value
+                            homeController.shouldShowOverlay.value
                                 ? SizedBox.shrink()
                                 : ThemeButton(
                                   onThemeTap: () {
@@ -61,6 +61,10 @@ class HomeView extends StatelessWidget {
                                     );
                                   },
                                 ),
+                            homeController.shouldShowOverlay.value &&
+                                    homeController.isOverlayPermissionGranted.value == true
+                                ? _OverlayText()
+                                : SizedBox.shrink(),
                           ],
                         ),
                       ),
@@ -68,7 +72,7 @@ class HomeView extends StatelessWidget {
                   ),
         ),
         floatingActionButton:
-            homeController.isOverlayOn.value
+            homeController.shouldShowOverlay.value
                 ? SizedBox.shrink()
                 : FloatingActionButton(
                   onPressed: () {
@@ -81,6 +85,31 @@ class HomeView extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+      ),
+    );
+  }
+}
+
+class _OverlayText extends StatelessWidget {
+  const _OverlayText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Column(
+        children: [
+          Text(
+            'Relax & use your phone freely!',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            'Motion sync is now active',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ],
       ),
     );
   }

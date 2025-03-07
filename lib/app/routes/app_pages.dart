@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:kine_stop/app/modules/home/views/overlay_screen.dart';
+import 'package:sync_motion/app/modules/home/views/overlay_screen.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
@@ -13,10 +13,6 @@ class AppPages {
 
   static final routes = [
     GetPage(name: _Paths.HOME, page: () => HomeView(), binding: HomeBinding()),
-    GetPage(
-      name: _Paths.OVERLAY,
-      page: () => OverLayView(),
-      binding: HomeBinding(),
-    ),
+    GetPage(name: _Paths.OVERLAY, page: () => OverLayView(), binding: HomeBinding()),
   ];
 }

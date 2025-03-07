@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kine_stop/app/modules/home/controllers/home_controller.dart';
-import 'package:kine_stop/app/modules/home/controllers/theme_controller.dart';
+import 'package:sync_motion/app/modules/home/controllers/home_controller.dart';
+import 'package:sync_motion/app/modules/home/controllers/theme_controller.dart';
 
 class MenuButton extends StatelessWidget {
   const MenuButton({super.key});
@@ -15,17 +15,13 @@ class MenuButton extends StatelessWidget {
         return [
           PopupMenuItem(
             value: '1',
-            child: Text(
-              !homeController.isOverlayOn.value
-                  ? 'Start overlay'
-                  : 'Stop overlay',
-            ),
+            child: Text(!homeController.shouldShowOverlay.value ? 'Start overlay' : 'Stop overlay'),
           ),
         ];
       },
       onSelected: (value) {
+        homeController.alterAndHandleOverlay();
         themeController.getAndSetStoredTheme();
-        homeController.handleOverlay();
       },
     );
   }
