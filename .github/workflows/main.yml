@@ -62,3 +62,4 @@ jobs:
         with:
           name: app-release
           path: build/app/outputs/bundle/release/app-release.aab
+
