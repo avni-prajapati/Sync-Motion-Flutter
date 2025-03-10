@@ -44,22 +44,16 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     shouldShowOverlay.value = !shouldShowOverlay.value;
     if (isOverlayPermissionGranted.value ?? false) {
       if (shouldShowOverlay.value) {
-        await _showOverlay();
+        await showOverlay();
+        storeOverlayOnValue(isOverlayOn: true);
       } else {
-        await _hideOverlay();
+        await hideOverlay();
+        storeOverlayOnValue(isOverlayOn: false);
       }
     } else {
       await FlutterOverlayWindow.requestPermission();
     }
   }
-
-  // Future<void> _checkOverlayPermissionOnResume() async {
-  //   isOverlayPermissionGranted.value = await FlutterOverlayWindow.isPermissionGranted();
-  //   final isActive = await FlutterOverlayWindow.isActive();
-  //   if ((isOverlayPermissionGranted.value ?? false) && shouldShowOverlay.value && isActive) {
-  //     await _showOverlay();
-  //   }
-  // }
 
   Future<void> _restoreOverlayIfNeeded() async {
     await _getAndSetOverlayData();
@@ -116,17 +110,30 @@ class HomeController extends GetxController with WidgetsBindingObserver {
     angle.value = a.clamp(-1.05, 1.05);
   }
 
-  Future<void> _showOverlay() async {
-    await box.write('isOverlayOn', true);
+  Future<void> showOverlay() async {
+    try {
+      bool isActive = await FlutterOverlayWindow.isActive();
+      if (isActive) {
+        await FlutterOverlayWindow.closeOverlay();
+        await Future.delayed(Duration(milliseconds: 300)); // Wait for close
+      }
+    } catch (e) {
+      // Ignore errors from checking if overlay is active
+    }
     await FlutterOverlayWindow.showOverlay(
       enableDrag: false,
       flag: OverlayFlag.clickThrough,
+      overlayTitle: 'Background Mode',
+      overlayContent: 'App running in overlay mode',
       alignment: OverlayAlignment.bottomCenter,
     );
   }
 
-  Future<void> _hideOverlay() async {
-    await box.write('isOverlayOn', false);
+  Future<void> storeOverlayOnValue({required bool isOverlayOn}) async {
+    await box.write('isOverlayOn', isOverlayOn);
+  }
+
+  Future<void> hideOverlay() async {
     await FlutterOverlayWindow.closeOverlay();
     shouldShowOverlay.refresh();
   }

@@ -6,14 +6,20 @@ import 'package:sync_motion/app/utils/utils.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/dotted_ui.dart';
 
-class OverLayView extends StatelessWidget {
+class OverLayView extends StatefulWidget {
   const OverLayView({super.key});
 
+  @override
+  State<OverLayView> createState() => _OverLayViewState();
+}
+
+class _OverLayViewState extends State<OverLayView> {
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final themeController = Get.find<ThemeController>();
-    themeController.getAndSetStoredTheme();
+    print('Color is... : ${themeController.selectedColor.value}');
+    setState(() {});
     return Obx(() {
       return Transform.rotate(
         angle: homeController.angle.value,
