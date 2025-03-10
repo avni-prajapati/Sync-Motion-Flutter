@@ -18,7 +18,6 @@ class _OverLayViewState extends State<OverLayView> {
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
     final themeController = Get.find<ThemeController>();
-    print('Color is... : ${themeController.selectedColor.value}');
     setState(() {});
     return Obx(() {
       return Transform.rotate(
