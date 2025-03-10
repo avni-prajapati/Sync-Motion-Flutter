@@ -1,0 +1,89 @@
+name: Flutter Build Apk
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  build:
+    name: "Flutter Build APK"
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: java --version
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.29.0-0.3.pre
+          cache: true
+          
+          cache-key: flutter-sdk-cache
+          cache-path: ${{ runner.tool_cache }}/flutter
+          pub-cache-key: flutter-pub-cache
+          pub-cache-path: ~/.pub-cache
+      - run: flutter --version
+
+      #5 Setup Keystore
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=keystore.jks" >> android/key.properties
+
+      # Create/modify local.properties
+      - name: Create local.properties for Dev
+        run: |
+          echo "flutter.sdk=/path/to/flutter" >> android/local.properties
+          echo "flutter.versionCode=1" >> android/local.properties
+          echo "flutter.versionName=1.0" >> android/local.properties
+
+      # Install melos
+      - name: Install melos
+        run: dart pub global activate melos
+
+      # Setup melos to resolve dependencies
+      - name: Setup melos
+        run: melos bs
+
+      # Generate routes and environment variables
+      - name: Generate routes and environment variables
+        run: melos run build-runner
+
+      # Generate localization keys
+      - name: Run Localisation Key Generation
+        run: melos run locale-gen
+
+      # Generate assets
+      - name: Run Asset generation
+        run: melos run asset-gen
+
+      # Build Android aab for prod flavor
+      - name: Build Android aab For Production
+        run: melos run build-aab-prod
+
+      # Build Android apk for prod flavor
+      #- name: Build Android apk For Dev
+      #  run: melos run build-apk-dev
+
+      # Upload the built APK artifact
+      - name: Upload the build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: build/app/outputs/bundle/release/app-release.aab
+
