@@ -52,33 +52,9 @@ jobs:
           echo "flutter.versionCode=1" >> android/local.properties
           echo "flutter.versionName=1.0" >> android/local.properties
 
-      # Install melos
-      - name: Install melos
-        run: dart pub global activate melos
-
-      # Setup melos to resolve dependencies
-      - name: Setup melos
-        run: melos bs
-
-      # Generate routes and environment variables
-      - name: Generate routes and environment variables
-        run: melos run build-runner
-
-      # Generate localization keys
-      - name: Run Localisation Key Generation
-        run: melos run locale-gen
-
-      # Generate assets
-      - name: Run Asset generation
-        run: melos run asset-gen
-
       # Build Android aab for prod flavor
       - name: Build Android aab For Production
-        run: melos run build-aab-prod
-
-      # Build Android apk for prod flavor
-      #- name: Build Android apk For Dev
-      #  run: melos run build-apk-dev
+        run: flutter run build-aab-prod
 
       # Upload the built APK artifact
       - name: Upload the build Artifact
