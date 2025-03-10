@@ -54,7 +54,7 @@ jobs:
 
       # Build Android aab for prod flavor
       - name: Build Android aab For Production
-        run: flutter run build-aab-prod
+        run: flutter build appbundle --release
 
       # Upload the built APK artifact
       - name: Upload the build Artifact
