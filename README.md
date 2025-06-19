@@ -35,13 +35,13 @@ Stay balanced with Sync Motion! 💫📲✨
 
 # 🤝 Contribution
 
-Contributions are welcome! If you have suggestions, improvements, or bug fixes, please open an issue
-or submit a pull request.
+Contributions are welcome! If you have suggestions, improvements, or bug fixes follow this steps.
 
-1. Fork the repository.
-2. Create a new branch (feature-branch)
-3. Commit your changes.
-4. Push to the branch and submit a pull request.
+1. please open an issue.
+2. Fork the repository.
+3. Create a new branch (feature-branch)
+4. Commit your changes.
+5. Push to the branch and submit a pull request.
 
 # 📬 Contact
 
