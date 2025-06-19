@@ -45,4 +45,4 @@ Contributions are welcome! If you have suggestions, improvements, or bug fixes f
 
 # 📬 Contact
 
-For issues or suggestions, open an issue or reach out at this [email](avniprajapati21101@gamil.com)
+For any issues or suggestions, open an issue or reach out at this [email](avniprajapati21101@gamil.com)
